@@ -7,7 +7,7 @@ interface SecondaryButtonProps {
     icon?: IconProps
 }
 
-export function SecondaryButton({ text, icon }: SecondaryButtonProps) {
+export function RemoveButton({ text, icon }: SecondaryButtonProps) {
     return (
         <>
             <C.ButtonStyled>

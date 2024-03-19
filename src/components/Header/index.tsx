@@ -1,28 +1,29 @@
-import * as C from "./styles"
-import LogoCoffeeDelivery from "../../assets/images/logo.svg"
-
-
+import * as C from './styles';
+import LogoCoffeeDelivery from '../../assets/images/logo.svg';
+import { Link, Outlet } from 'react-router-dom';
 
 export function Header() {
   return (
-
-    <C.Main>
-      <C.Logo>
-        <img src={LogoCoffeeDelivery} alt="" />
-      </C.Logo>
-      <C.LocationAndCart>
-        <C.CardLocation> 
-          <C.IconMapPin/>
-          <C.TextCardLocation>
-            Porto Alegre, RS
-          </C.TextCardLocation>
-        </C.CardLocation>
+    <>
+      <C.Main>
+        <Link to={"/"}>
+        <C.Logo>
+          <img src={LogoCoffeeDelivery} alt="" />
+        </C.Logo>
+        </Link>
+        <C.LocationAndCart>
+          <C.CardLocation>
+            <C.IconMapPin />
+            <C.TextCardLocation>Porto Alegre, RS</C.TextCardLocation>
+          </C.CardLocation>
           <C.CartStatus>
-            <C.IconCart/>
+            <Link to={'/checkout'}>
+              <C.IconCart />
+            </Link>
           </C.CartStatus>
-      </C.LocationAndCart>
-
-    </C.Main>
-
-  )
+        </C.LocationAndCart>
+      </C.Main>
+      <Outlet />
+    </>
+  );
 }

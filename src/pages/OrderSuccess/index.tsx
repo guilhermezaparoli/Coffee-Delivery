@@ -5,9 +5,8 @@ import { SelectPayment } from "../../components/SelectPayment"
 import { AmountItems } from "../../components/AmountItems"
 import CoffeeExpressoAme from "../../assets/images/type-americano.svg"
 import { RemoveButton } from "../../components/Buttons/RemoveButton"
-import { ConfirmButton } from "../../components/Buttons/ConfirmButton"
 
-export function Checkout() {
+export function OrderSuccess() {
   return (
     <C.Global>
       <C.LeftBlock>
@@ -113,9 +112,8 @@ export function Checkout() {
               <C.BoldText>R$ 33,20</C.BoldText>
             </C.LineCheckout>
           </C.Checkout>
-          <ConfirmButton text="Confirmar"/>
         </C.CartBlock>
       </C.RightBlock>
     </C.Global>
   )
-} 
+}
