@@ -54,7 +54,7 @@ export const TextSubtitle = styled(BaseText)`
 font-size: 14px;
 color: ${({theme}) => theme["base-subtitle"]};
 `
-export const WrapperInputsText = styled.div`
+export const WrapperFormInputs = styled.div`
 display: flex;
 flex-direction: column;
 gap: 16px;

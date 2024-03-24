@@ -1,20 +1,23 @@
 import styled from "styled-components";
 
-export const MainContainer = styled.button`
+interface MainContainerProps {
+  isSelected: boolean
+}
+
+export const MainContainer = styled.button<MainContainerProps>`
 padding: 16px;
 border-radius: 6px;
-background-color: ${({theme}) => theme["base-button"]};
+background-color: ${({theme, isSelected}) => isSelected ? theme["purple-light"] : theme["base-button"]};
 display: inline-block;
 cursor: pointer;
 
-border: none;
+border: ${({theme, isSelected}) => isSelected ? `1px solid ${theme.purple} ` : '1px solid transparent'};
+
 outline: none;
 
 transition: 0.3s;
 
-border: 1px solid transparent;
-
-&:hover {
+&:hover { 
   background-color: ${({theme}) => theme["base-hover"]};
 }
 

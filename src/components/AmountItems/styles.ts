@@ -20,6 +20,7 @@ min-height: 38px;
   color: ${({theme}) => theme["base-title"]};
   text-align: center;
   user-select: none;
+  min-width: 20px;
 }
 `
 
@@ -52,9 +53,16 @@ border: none;
 
 export const IconMinus = styled(baseIcon)`
 
+transition: 0.3s;
+&:hover {
+  filter: brightness(0.7);
+}
 
 `
 export const IconPlus = styled(baseIcon)`
-
+transition: 0.3s;
+&:hover {
+  filter: brightness(0.7);
+}
 
 `

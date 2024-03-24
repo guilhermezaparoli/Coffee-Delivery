@@ -36,8 +36,7 @@ export function App() {
   return (
     <>
     <ThemeProvider theme={defaultTheme}>
-
-    {/* <Header/> */}
+      
     <RouterProvider router={router} />
     </ThemeProvider>
     <GlobalStyle  />

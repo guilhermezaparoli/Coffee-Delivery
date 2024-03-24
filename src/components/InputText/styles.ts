@@ -1,14 +1,26 @@
 import styled from "styled-components";
 
-export const Input = styled.input`
+
+interface InputProps {
+  errors: boolean
+}
+export const Input = styled.input<InputProps>`
 width: 100%;
 padding: 12px;
 
 border-radius: 4px;
-border: 1px solid ${({theme}) => theme["base-button"]};
+border: 1px solid ${({theme, errors}) => errors ? "red" : theme["base-button"]};
+
 background-color: ${({theme}) => theme["base-input"]};
 color: ${({theme}) => theme["base-text"]};
 outline: none;
+
+
+&&::-webkit-outer-spin-button,
+&&::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 
 
 &::placeholder {
