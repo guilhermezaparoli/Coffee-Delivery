@@ -7,6 +7,7 @@ import { Checkout } from "./pages/Checkout"
 import { Home } from './pages/Home'
 import {createBrowserRouter, RouterProvider} from "react-router-dom"
 import { OrderSuccess } from "./pages/OrderSuccess"
+import { CartContextProvider } from "./contexts/CartContext"
 
 
 const router= createBrowserRouter([
@@ -34,12 +35,13 @@ const router= createBrowserRouter([
 export function App() {
 
   return (
-    <>
+    < >
+      <CartContextProvider>
     <ThemeProvider theme={defaultTheme}>
-      
     <RouterProvider router={router} />
     </ThemeProvider>
     <GlobalStyle  />
+      </CartContextProvider>
     </>
   )
 }

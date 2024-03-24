@@ -60,8 +60,32 @@ border-radius: 6px;
 background-color: ${({theme}) => theme["yellow-light"]};
 
 height: 38px;
-
+position: relative;
 cursor: pointer; 
+`
+
+export const AmountItensCart = styled.div`
+width: 20px;
+height: 20px;
+border-radius: 1000px;
+background-color: ${({theme}) => theme["yellow-dark"]};
+display: flex;
+align-items: center;
+justify-content: center;
+
+position: absolute;
+top: 0;
+`
+export const TextAmountItensCart = styled.p`
+width: 20px;
+
+text-align: center;
+
+color: ${({theme})=> theme.white};
+font-size: 0.75rem;
+font-weight: 700;
+line-height: 1.3;
+font-family: "Roboto", sans-serif;
 `
 
 export const IconCart = styled(ShoppingCart).attrs(({

@@ -1,8 +1,20 @@
 import * as C from './styles';
 import LogoCoffeeDelivery from '../../assets/images/logo.svg';
 import { Link, Outlet } from 'react-router-dom';
+import { useContext } from 'react';
+import { CartContext } from '../../contexts/CartContext';
 
 export function Header() {
+
+  const {itemsCart} = useContext(CartContext)
+
+
+console.log(itemsCart)
+
+
+
+
+
   return (
     <>
       <C.Main>
@@ -20,6 +32,9 @@ export function Header() {
             <Link to={'/checkout'}>
               <C.IconCart />
             </Link>
+            <C.AmountItensCart>
+              <C.TextAmountItensCart>3</C.TextAmountItensCart>
+            </C.AmountItensCart>
           </C.CartStatus>
         </C.LocationAndCart>
       </C.Main>

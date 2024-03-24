@@ -47,7 +47,7 @@ export function Checkout() {
     resolver: zodResolver(newOrderValidationSchema)
   });
   // const navigate = useNavigate()
-console.log(errors)
+  
   function handleNewOrder(data: handleNewOrderData) {
     console.log(data);
 
@@ -173,7 +173,7 @@ console.log(errors)
               <p>Expresso Tradicional</p>
 
               <C.AmountAndRemoveContainer>
-                <AmountItems />
+                <AmountItems  />
                 <RemoveButton icon={<Trash />} text="REMOVER" />
               </C.AmountAndRemoveContainer>
             </C.NameAmountRemoveItemContainer>
