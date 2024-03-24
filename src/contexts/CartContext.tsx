@@ -2,14 +2,12 @@ import { ReactNode, createContext, useState } from 'react';
 
 
 interface CartContextType {
-   itemsCart: {
-    [key: number]: ItemsCardType
-   },
-   setItemsCart: (value: ItemsCardType) => void
+   itemsCart: ItemsCardType[],
+   setItemsCart: (value: ItemsCardType[]) => void
 }
 
 interface ItemsCardType {
-    amount?: number,
+    amount: number,
     description: string,
     id: number,
     image:string,
@@ -26,7 +24,7 @@ interface CartContextProviderProps {
 }
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
-  const [itemsCart, setItemsCart] = useState<ItemsCardType>({});
+  const [itemsCart, setItemsCart] = useState<ItemsCardType[]>([] as ItemsCardType[]);
   return (
     <CartContext.Provider value={{ itemsCart, setItemsCart }}>
       {children}

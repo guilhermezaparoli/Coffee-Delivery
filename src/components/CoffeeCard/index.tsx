@@ -50,18 +50,20 @@ export function CoffeeCard({ data, index }: CoffeeCardProps) {
   const [numberItems, setNumberItems] = useState<number>(1)
 
   const { itemsCart, setItemsCart } = useContext(CartContext);
-  const objCart = itemsCart;
+
+  const itemCartNew = [...itemsCart]
 
   function addItemsCart() {
+    const isItemList = itemCartNew.some((item) => item.id == data.id )
 
-    if(objCart[data.id]) {
-      objCart[data.id].amount = objCart[data.id].amount  + numberItems
+    if(isItemList) {
+      const indexItemList = itemCartNew.findIndex((item) => item.id == data.id )
+    itemCartNew[indexItemList].amount += numberItems
     } else {
-      objCart[data.id] = data
-      objCart[data.id].amount = numberItems
+      itemCartNew.push({...data, amount: numberItems})
     }
-
-    setItemsCart(objCart)
+    
+    setItemsCart(itemCartNew)
   }
 
   return (
@@ -88,7 +90,7 @@ export function CoffeeCard({ data, index }: CoffeeCardProps) {
         <C.AmountItemsAndAddCart>
           <AmountItems amountItems={numberItems} setAmountItems={setNumberItems}/>
           <C.AddItemsCard>
-            <ShoppingCartSimple onClick={()=> {addItemsCart()}} weight="fill" />
+            <ShoppingCartSimple onClick={addItemsCart} weight="fill" />
           </C.AddItemsCard>
         </C.AmountItemsAndAddCart>
       </C.WrapperFooter>

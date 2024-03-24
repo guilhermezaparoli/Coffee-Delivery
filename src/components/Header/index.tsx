@@ -8,11 +8,7 @@ export function Header() {
 
   const {itemsCart} = useContext(CartContext)
 
-
-console.log(itemsCart)
-
-
-
+  const totalItens = itemsCart.reduce((acc, cur) => acc + cur.amount , 0)
 
 
   return (
@@ -33,7 +29,7 @@ console.log(itemsCart)
               <C.IconCart />
             </Link>
             <C.AmountItensCart>
-              <C.TextAmountItensCart>3</C.TextAmountItensCart>
+              <C.TextAmountItensCart>{totalItens}</C.TextAmountItensCart>
             </C.AmountItensCart>
           </C.CartStatus>
         </C.LocationAndCart>
