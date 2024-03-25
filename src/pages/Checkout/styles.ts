@@ -87,10 +87,11 @@ export const RightBlock = styled.div`
 
 export const CartBlock = styled(BaseBlock)`
 border-radius: 6px 44px;
+
 `
 
 export const ItemCart = styled.div`
-padding: 8px 4px;
+padding: 8px 4px 20px;
 
 
 display: flex;
@@ -100,6 +101,31 @@ gap: 20px;
   width: 64px;
   height: 64px;
 }
+border-bottom: 1px solid rgba(140, 136, 136, 0.20);
+
+`
+export const CartNoItems = styled(BaseBlock)`
+
+
+border-radius: 6px 44px;
+
+`
+
+export const ItemNoItemsCart = styled.div`
+padding: 8px 4px;
+
+
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+gap: 10px;
+
+> img {
+  width: 64px;
+  height: 64px;
+}
+
 `
 
 export const NameAmountRemoveItemContainer = styled.div`
@@ -154,4 +180,20 @@ font-weight: 700;
 line-height: 1.3;
 color: ${({theme}) => theme["base-subtitle"]};
 
+`
+
+export const ButtonSeeProducts = styled.button`
+border: none;
+
+padding: 10px;
+color: ${({theme}) => theme["white"]};
+font-weight: 700;
+border-radius: 8px;
+background-color: ${({theme}) => theme["yellow-dark"]};
+cursor: pointer;
+
+transition: 0.3s;
+&:hover {
+  filter: brightness(0.9);
+}
 `

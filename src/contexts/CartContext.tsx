@@ -6,13 +6,14 @@ interface CartContextType {
    setItemsCart: (value: ItemsCardType[]) => void
 }
 
-interface ItemsCardType {
+export interface ItemsCardType {
     amount: number,
     description: string,
     id: number,
     image:string,
     name:string,
     price:string,
+    priceNumber:number,
     tag: string[]
 }
 

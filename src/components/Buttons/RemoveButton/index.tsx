@@ -4,13 +4,14 @@ import * as C from './styles'
 
 interface SecondaryButtonProps {
     text: string,
-    icon?: IconProps
+    icon?: IconProps,
+    onClick: () => void
 }
 
-export function RemoveButton({ text, icon }: SecondaryButtonProps) {
+export function RemoveButton({ text, icon, onClick }: SecondaryButtonProps) {
     return (
         <>
-            <C.ButtonStyled>
+            <C.ButtonStyled onClick={onClick}>
                 <C.BlockTextIcon>
                     <>
                         {icon}

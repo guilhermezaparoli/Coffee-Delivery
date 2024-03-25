@@ -22,7 +22,7 @@ export function Header() {
         <C.LocationAndCart>
           <C.CardLocation>
             <C.IconMapPin />
-            <C.TextCardLocation>Porto Alegre, RS</C.TextCardLocation>
+            <C.TextCardLocation>José Bonifácio, SP</C.TextCardLocation>
           </C.CardLocation>
           <C.CartStatus>
             <Link to={'/checkout'}>

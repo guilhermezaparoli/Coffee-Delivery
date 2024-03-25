@@ -10,52 +10,103 @@ import * as C from './styles';
 import { InputText } from '../../components/InputText';
 import { SelectPayment } from '../../components/SelectPayment';
 import { AmountItems } from '../../components/AmountItems';
+import CoffeeExpressoTrad from '../../assets/images/type-expresso.svg';
 import CoffeeExpressoAme from '../../assets/images/type-americano.svg';
+import CoffeeExpressoCre from '../../assets/images/type-expresso-cremoso.svg';
+import CoffeeExpressoGel from '../../assets/images/type-caf-gelado.svg';
+import CoffeeLeite from '../../assets/images/type-caf-com-leite.svg';
+import CoffeeLatte from '../../assets/images/type-latte.svg';
+import CoffeeCappuccino from '../../assets/images/type-capuccino.svg';
+import CoffeeMocaccino from '../../assets/images/type-mochaccino.svg';
+import CoffeeMacchiato from '../../assets/images/type-macchiato.svg';
+import CoffeeChocolateQuente from '../../assets/images/type-chocolate-quente.svg';
+import CoffeeCubano from '../../assets/images/type-cubano.svg';
+import CoffeeHavaiano from '../../assets/images/type-havaiano.svg';
+import CoffeeArabe from '../../assets/images/typerabe.svg';
+import CoffeeIrlandes from '../../assets/images/type-irlands.svg';
 import { RemoveButton } from '../../components/Buttons/RemoveButton';
 import { ConfirmButton } from '../../components/Buttons/ConfirmButton';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import {zodResolver} from "@hookform/resolvers/zod";
-import * as zod from "zod";
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as zod from 'zod';
 import 'react-toastify/dist/ReactToastify.css';
-import {toast } from 'react-toastify';
+import { toast } from 'react-toastify';
+import { CartContext } from '../../contexts/CartContext';
 
-
-interface handleNewOrderData{
-  cep: string,
-  rua: string,
-  numero: string,
-  complemento: string,
-  bairro: string,
-  cidade: string,
-  uf: string
+interface handleNewOrderData {
+  cep: string;
+  rua: string;
+  numero: string;
+  complemento: string;
+  bairro: string;
+  cidade: string;
+  uf: string;
 }
 
 export function Checkout() {
   const [typePaymentSelected, setTypePaymentSelected] = useState<string>('');
   const newOrderValidationSchema = zod.object({
-    cep: zod.string().min(8, "teste"),
-    rua: zod.string().min(3, "Informe a rua"),
-    numero: zod.string().min(1, "Informe o número"),
+    cep: zod.string().min(8, 'teste'),
+    rua: zod.string().min(3, 'Informe a rua'),
+    numero: zod.string().min(1, 'Informe o número'),
     complemento: zod.string(),
-    bairro: zod.string().min(3, "Informe o bairro"),
-    cidade: zod.string().min(2, "Informe a cidade"),
-    uf: zod.string().min(2, "Informe a UF correta")
-  })
-  const { register, handleSubmit, formState: {errors} } = useForm<handleNewOrderData>({
-    resolver: zodResolver(newOrderValidationSchema)
+    bairro: zod.string().min(3, 'Informe o bairro'),
+    cidade: zod.string().min(2, 'Informe a cidade'),
+    uf: zod.string().min(2, 'Informe a UF correta'),
   });
-  // const navigate = useNavigate()
-  
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<handleNewOrderData>({
+    resolver: zodResolver(newOrderValidationSchema),
+  });
+  const navigate = useNavigate();
+
   function handleNewOrder(data: handleNewOrderData) {
     console.log(data);
 
-
-    // navigate("/order-success")
+    navigate('/order-success');
   }
 
+  const { itemsCart, setItemsCart } = useContext(CartContext);
+
+  const images = [
+    CoffeeExpressoTrad,
+    CoffeeExpressoAme,
+    CoffeeExpressoCre,
+    CoffeeExpressoGel,
+    CoffeeLeite,
+    CoffeeLatte,
+    CoffeeCappuccino,
+    CoffeeMacchiato,
+    CoffeeMocaccino,
+    CoffeeChocolateQuente,
+    CoffeeCubano,
+    CoffeeHavaiano,
+    CoffeeArabe,
+    CoffeeIrlandes,
+  ];
+
+  const totalPrice = itemsCart.reduce((acc, curr) => acc + curr.priceNumber, 0);
   toast.success('🦄 Wow so easy!');
+
+
+  function removeItem(toDelet: number){
+    console.log(toDelet)
+const itemToDelete = itemsCart.findIndex((item) => item.id == toDelet ) 
+
+if(itemToDelete !== -1){
+  itemsCart.splice(itemToDelete, 1);
+}
+
+setItemsCart([...itemsCart])
+
+  }
+
+  useEffect(()=> {}, [itemsCart])
 
   return (
     <C.Global>
@@ -88,14 +139,14 @@ export function Checkout() {
             <C.WrapperInputsInternal>
               <InputText
                 type="number"
-              errors={errors.numero ? true : false}
+                errors={errors.numero ? true : false}
                 placeHolder="Número"
                 style={{ width: '200px' }}
-                register={{ ...register('numero')}}
+                register={{ ...register('numero') }}
               />
               <InputText
                 type="text"
-              errors={errors.complemento ? true : false}
+                errors={errors.complemento ? true : false}
                 placeHolder="Complemento"
                 register={{ ...register('complemento') }}
               />
@@ -104,8 +155,8 @@ export function Checkout() {
             <C.WrapperInputsInternal>
               <InputText
                 type="text"
-              errors={errors.bairro ? true : false}
-              placeHolder="Bairro"
+                errors={errors.bairro ? true : false}
+                placeHolder="Bairro"
                 style={{
                   width: '200px',
                 }}
@@ -114,13 +165,13 @@ export function Checkout() {
               <InputText
                 type="text"
                 placeHolder="Cidade"
-              errors={errors.cidade ? true : false}
+                errors={errors.cidade ? true : false}
                 register={{ ...register('cidade') }}
               />
               <InputText
                 type="text"
                 placeHolder="UF"
-              errors={errors.uf ? true : false}
+                errors={errors.uf ? true : false}
                 style={{
                   width: '60px',
                 }}
@@ -165,46 +216,65 @@ export function Checkout() {
       <C.RightBlock>
         <h3>Cafés selecionados</h3>
 
-        <C.CartBlock>
-          <C.ItemCart>
-            <img src={CoffeeExpressoAme} alt="" />
+        {itemsCart.length > 0 ? (
+          <C.CartBlock>
+            {itemsCart.map((item) => (
+              <C.ItemCart key={item.id}>
+                <img src={images[item.id]} alt="" />
 
-            <C.NameAmountRemoveItemContainer>
-              <p>Expresso Tradicional</p>
+                <C.NameAmountRemoveItemContainer>
+                  <p>{item.name}</p>
 
-              <C.AmountAndRemoveContainer>
-                <AmountItems  />
-                <RemoveButton icon={<Trash />} text="REMOVER" />
-              </C.AmountAndRemoveContainer>
-            </C.NameAmountRemoveItemContainer>
-            <C.Price>R$ 9,90</C.Price>
-          </C.ItemCart>
+                  <C.AmountAndRemoveContainer>
+                    <AmountItems amountItems={item.amount} />
+                    <RemoveButton icon={<Trash />} onClick={() => removeItem(item.id)} text="REMOVER" />
+                  </C.AmountAndRemoveContainer>
+                </C.NameAmountRemoveItemContainer>
+                <C.Price>R$ {item.price}</C.Price>
+              </C.ItemCart>
+            ))}
 
-          <C.DivisionLine />
+            <C.DivisionLine />
 
-          <C.Checkout>
-            <C.LineCheckout>
-              <C.SimpleText>Total de itens</C.SimpleText>
-              <C.SimpleText>R$ 29,70</C.SimpleText>
-            </C.LineCheckout>
+            <C.Checkout>
+              <C.LineCheckout>
+                <C.SimpleText>Total de itens</C.SimpleText>
+                <C.SimpleText>
+                  R$ {totalPrice.toFixed(2).replace('.', ',')}
+                </C.SimpleText>
+              </C.LineCheckout>
 
-            <C.LineCheckout>
-              <C.SimpleText>Entrega</C.SimpleText>
-              <C.SimpleText>R$ 3,50</C.SimpleText>
-            </C.LineCheckout>
+              <C.LineCheckout>
+                <C.SimpleText>Entrega</C.SimpleText>
+                <C.SimpleText>R$ 3,50</C.SimpleText>
+              </C.LineCheckout>
 
-            <C.LineCheckout>
-              <C.BoldText>Total</C.BoldText>
-              <C.BoldText>R$ 33,20</C.BoldText>
-            </C.LineCheckout>
-          </C.Checkout>
-          <Link to={'/order-success'}>
-            <ConfirmButton
-              onClick={handleSubmit(handleNewOrder)}
-              text="Confirmar"
-            />
-          </Link>
-        </C.CartBlock>
+              <C.LineCheckout>
+                <C.BoldText>Total</C.BoldText>
+                <C.BoldText>
+                  R$ {(totalPrice + 3.5).toFixed(2).replace('.', ',')}
+                </C.BoldText>
+              </C.LineCheckout>
+            </C.Checkout>
+            <Link to={'/order-success'}>
+              <ConfirmButton
+                onClick={handleSubmit(handleNewOrder)}
+                text="Confirmar"
+              />
+            </Link>
+          </C.CartBlock>
+        ) : (
+          <C.CartNoItems>
+            <C.ItemNoItemsCart>
+         
+                <p>Não há produtos adicionados no carrinho!</p>
+                <Link to={"/"}>
+                <C.ButtonSeeProducts>Ver produtos</C.ButtonSeeProducts>
+                </Link>
+             
+            </C.ItemNoItemsCart>
+          </C.CartNoItems>
+        )}
       </C.RightBlock>
     </C.Global>
   );

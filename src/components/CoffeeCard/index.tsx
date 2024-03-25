@@ -26,6 +26,7 @@ interface CoffeeCardProps {
     description: string;
     price: string;
     image: string;
+    priceNumber: number
   };
   index: number;
 }
@@ -62,7 +63,7 @@ export function CoffeeCard({ data, index }: CoffeeCardProps) {
     } else {
       itemCartNew.push({...data, amount: numberItems})
     }
-    
+
     setItemsCart(itemCartNew)
   }
 
