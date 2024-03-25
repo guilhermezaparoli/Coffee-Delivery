@@ -31,12 +31,11 @@ import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as zod from 'zod';
-import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import { CartContext } from '../../contexts/CartContext';
 
 interface handleNewOrderData {
-  cep: string;
+  cep: number;
   rua: string;
   numero: string;
   complemento: string;
@@ -46,9 +45,11 @@ interface handleNewOrderData {
 }
 
 export function Checkout() {
+  const { itemsCart, setItemsCart, setDataOrder } = useContext(CartContext);
+
   const [typePaymentSelected, setTypePaymentSelected] = useState<string>('');
   const newOrderValidationSchema = zod.object({
-    cep: zod.string().min(8, 'teste'),
+    cep: zod.number().min(8),
     rua: zod.string().min(3, 'Informe a rua'),
     numero: zod.string().min(1, 'Informe o número'),
     complemento: zod.string(),
@@ -66,12 +67,14 @@ export function Checkout() {
   const navigate = useNavigate();
 
   function handleNewOrder(data: handleNewOrderData) {
-    console.log(data);
+
+    setDataOrder({...data})
 
     navigate('/order-success');
+
+    toast.success("Pedido realizado com sucesso!")
   }
 
-  const { itemsCart, setItemsCart } = useContext(CartContext);
 
   const images = [
     CoffeeExpressoTrad,
@@ -91,7 +94,6 @@ export function Checkout() {
   ];
 
   const totalPrice = itemsCart.reduce((acc, curr) => acc + curr.priceNumber, 0);
-  toast.success('🦄 Wow so easy!');
 
 
   function removeItem(toDelet: number){
@@ -104,9 +106,12 @@ if(itemToDelete !== -1){
 
 setItemsCart([...itemsCart])
 
+toast.success("Produto excluído do carrinho!")
   }
 
   useEffect(()=> {}, [itemsCart])
+
+
 
   return (
     <C.Global>
@@ -128,7 +133,8 @@ setItemsCart([...itemsCart])
               placeHolder="CEP"
               errors={errors.cep ? true : false}
               style={{ width: '200px' }}
-              register={{ ...register('cep') }}
+              register={{ ...register('cep', {valueAsNumber: true}) }}
+              maxLength={8}
             />
             <InputText
               type="text"
@@ -138,7 +144,7 @@ setItemsCart([...itemsCart])
             />
             <C.WrapperInputsInternal>
               <InputText
-                type="number"
+                type="text"
                 errors={errors.numero ? true : false}
                 placeHolder="Número"
                 style={{ width: '200px' }}

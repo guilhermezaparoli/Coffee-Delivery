@@ -17,6 +17,7 @@ import { AmountItems } from '../AmountItems';
 import { ShoppingCartSimple } from '@phosphor-icons/react';
 import { useContext, useState } from 'react';
 import { CartContext } from '../../contexts/CartContext';
+import { toast } from 'react-toastify';
 
 interface CoffeeCardProps {
   data: {
@@ -65,6 +66,12 @@ export function CoffeeCard({ data, index }: CoffeeCardProps) {
     }
 
     setItemsCart(itemCartNew)
+    
+    numberItems > 1 ? toast.success("Cafés adicionados ao carrinho", {
+      closeOnClick: true
+    })  : toast.success("Café adicionado ao carrinho", {
+      closeOnClick: true
+    })
   }
 
   return (

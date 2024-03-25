@@ -8,6 +8,9 @@ import { Home } from './pages/Home'
 import {createBrowserRouter, RouterProvider} from "react-router-dom"
 import { OrderSuccess } from "./pages/OrderSuccess"
 import { CartContextProvider } from "./contexts/CartContext"
+// import {ToastContainer} from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify"
 
 
 const router= createBrowserRouter([
@@ -37,6 +40,7 @@ export function App() {
   return (
     < >
       <CartContextProvider>
+        <ToastContainer/>
     <ThemeProvider theme={defaultTheme}>
     <RouterProvider router={router} />
     </ThemeProvider>

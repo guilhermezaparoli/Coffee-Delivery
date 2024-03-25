@@ -1,8 +1,13 @@
 import { CurrencyDollar, MapPin, Timer } from '@phosphor-icons/react';
 import * as C from './styles';
 import MotoCycleDelivery  from "../../assets/images/motocicle-delivery.svg"
+import { useContext } from 'react';
+import { CartContext } from '../../contexts/CartContext';
 
 export function OrderSuccess() {
+  const {dataOrder} = useContext(CartContext)
+  
+  console.log(dataOrder)
   return (
     <C.Global>
       <C.LeftBlock>
@@ -15,9 +20,9 @@ export function OrderSuccess() {
             <C.IconMapRounded>
               <MapPin weight="fill" />
             </C.IconMapRounded>
-            <p>
-              Entrega em <C.BoldText>Rua João Daniel Martinelli, 102</C.BoldText>
-              , Farrapos - Porto Alegre, RS
+            <p> 
+              Entrega em <C.BoldText>Rua {dataOrder.rua},{dataOrder.numero}</C.BoldText>
+              , {dataOrder.bairro} - {dataOrder.cidade}, {dataOrder.uf}
             </p>
           </C.IconeTexto>
 
