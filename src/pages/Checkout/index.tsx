@@ -42,12 +42,13 @@ interface handleNewOrderData {
   bairro: string;
   cidade: string;
   uf: string;
+  typePayment: string
 }
 
 export function Checkout() {
   const { itemsCart, setDataOrder, setItemsLocalStorage } = useContext(CartContext);
 
-  const [typePaymentSelected, setTypePaymentSelected] = useState<string>('');
+  const [typePaymentSelected, setTypePaymentSelected] = useState<string>('DINHEIRO');
   const newOrderValidationSchema = zod.object({
     cep: zod.number().min(8),
     rua: zod.string().min(3, 'Informe a rua'),
@@ -67,11 +68,29 @@ export function Checkout() {
   const navigate = useNavigate();
 
   function handleNewOrder(data: handleNewOrderData) {
-    setDataOrder({ ...data });
 
-    navigate('/order-success');
+    console.log(typePaymentSelected)
+    let typePaymentFormated = "";
+    switch(typePaymentSelected) {
+      case 'DINHEIRO': 
+      typePaymentFormated = "Dinheiro"
+      break
+      case 'CREDITO': 
+      typePaymentFormated = "Cartão de Cŕedito"
+      break
+      case 'DEBITO': 
+      typePaymentFormated = "Cartão de Débito"
+      break
+    }
 
-    toast.success('Pedido realizado com sucesso!');
+    setDataOrder({ ...data, typePayment: typePaymentFormated });
+
+
+   
+      navigate('/order-success');
+
+      toast.success('Pedido realizado com sucesso!');
+      setItemsLocalStorage([])
   }
 
   const images = [

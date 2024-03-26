@@ -30,6 +30,7 @@ interface DataOrderType {
     bairro: string,
     cidade: string,
     uf: string
+    typePayment: string
   
 }
 

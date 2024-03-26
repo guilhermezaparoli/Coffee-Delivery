@@ -6,7 +6,7 @@ import { CartContext } from '../../contexts/CartContext';
 
 export function OrderSuccess() {
   const {dataOrder} = useContext(CartContext)
-  
+
   return (
     <C.Global>
       <C.LeftBlock>
@@ -38,7 +38,7 @@ export function OrderSuccess() {
               <CurrencyDollar />
             </C.IconMoneyRounded>
             <p>
-              Pagamento na entrega <C.BoldText>Cartão de Crédito</C.BoldText>
+              Pagamento na entrega <C.BoldText>{dataOrder.typePayment}</C.BoldText>
             </p>
           </C.IconeTexto>
         </C.BaseBlock>
