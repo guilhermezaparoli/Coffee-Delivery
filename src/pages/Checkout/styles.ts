@@ -54,6 +54,11 @@ export const TextSubtitle = styled(BaseText)`
 font-size: 14px;
 color: ${({theme}) => theme["base-subtitle"]};
 `
+export const TextError = styled(BaseText)`
+font-size: 11px;
+color: red;
+position: absolute;
+`
 export const WrapperFormInputs = styled.div`
 display: flex;
 flex-direction: column;

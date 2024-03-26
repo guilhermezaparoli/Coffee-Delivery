@@ -37,22 +37,24 @@ import { CartContext } from '../../contexts/CartContext';
 interface handleNewOrderData {
   cep: number;
   rua: string;
-  numero: string;
+  numero: number;
   complemento: string;
   bairro: string;
   cidade: string;
   uf: string;
-  typePayment: string
+  typePayment: string;
 }
 
 export function Checkout() {
-  const { itemsCart, setDataOrder, setItemsLocalStorage } = useContext(CartContext);
+  const { itemsCart, setDataOrder, setItemsLocalStorage } =
+    useContext(CartContext);
 
-  const [typePaymentSelected, setTypePaymentSelected] = useState<string>('DINHEIRO');
+  const [typePaymentSelected, setTypePaymentSelected] =
+    useState<string>('DINHEIRO');
   const newOrderValidationSchema = zod.object({
     cep: zod.number().min(8),
     rua: zod.string().min(3, 'Informe a rua'),
-    numero: zod.string().min(1, 'Informe o número'),
+    numero: zod.number().min(1, 'Informe o número'),
     complemento: zod.string(),
     bairro: zod.string().min(3, 'Informe o bairro'),
     cidade: zod.string().min(2, 'Informe a cidade'),
@@ -68,29 +70,26 @@ export function Checkout() {
   const navigate = useNavigate();
 
   function handleNewOrder(data: handleNewOrderData) {
-
-    console.log(typePaymentSelected)
-    let typePaymentFormated = "";
-    switch(typePaymentSelected) {
-      case 'DINHEIRO': 
-      typePaymentFormated = "Dinheiro"
-      break
-      case 'CREDITO': 
-      typePaymentFormated = "Cartão de Cŕedito"
-      break
-      case 'DEBITO': 
-      typePaymentFormated = "Cartão de Débito"
-      break
+    console.log(typePaymentSelected);
+    let typePaymentFormated = '';
+    switch (typePaymentSelected) {
+      case 'DINHEIRO':
+        typePaymentFormated = 'Dinheiro';
+        break;
+      case 'CREDITO':
+        typePaymentFormated = 'Cartão de Cŕedito';
+        break;
+      case 'DEBITO':
+        typePaymentFormated = 'Cartão de Débito';
+        break;
     }
 
     setDataOrder({ ...data, typePayment: typePaymentFormated });
 
+    navigate('/order-success');
 
-   
-      navigate('/order-success');
-
-      toast.success('Pedido realizado com sucesso!');
-      setItemsLocalStorage([])
+    toast.success('Pedido realizado com sucesso!');
+    setItemsLocalStorage([]);
   }
 
   const images = [
@@ -122,12 +121,11 @@ export function Checkout() {
       itemsCart.splice(itemToDelete, 1);
     }
 
-    setItemsLocalStorage([...itemsCart])
+    setItemsLocalStorage([...itemsCart]);
     toast.success('Produto excluído do carrinho!');
   }
 
-  useEffect(() => {
-  }, [itemsCart]);
+  useEffect(() => {}, [itemsCart]);
 
   useEffect(() => {
     Object.keys(errors).length > 0 &&
@@ -149,25 +147,32 @@ export function Checkout() {
             </div>
           </C.TextIconBlock>
           <C.WrapperFormInputs>
-            <InputText
-              type="number"
-              placeHolder="CEP"
-              errors={errors.cep ? true : false}
-              style={{ width: '200px' }}
-              register={{ ...register('cep', { valueAsNumber: true }) }}
-              maxLength={8}
-            />
+            <C.TextSubtitle>*campos obrigatórios</C.TextSubtitle>
+            <div>
+              <InputText
+                type="number"
+                placeHolder="CEP*"
+                errors={errors.cep ? true : false}
+                style={{ width: '200px' }}
+                register={{ ...register('cep', { valueAsNumber: true }) }}
+                maxLength={8}
+              />
+              {errors.cep && (
+                <C.TextError>Informe um CEP válido!</C.TextError>
+              )}
+            </div>
+
             <InputText
               type="text"
               errors={errors.rua ? true : false}
-              placeHolder="Rua"
+              placeHolder="Rua*"
               register={{ ...register('rua') }}
             />
             <C.WrapperInputsInternal>
               <InputText
-                type="text"
+                type="number"
                 errors={errors.numero ? true : false}
-                placeHolder="Número"
+                placeHolder="Número*"
                 style={{ width: '200px' }}
                 register={{ ...register('numero') }}
               />
@@ -183,7 +188,7 @@ export function Checkout() {
               <InputText
                 type="text"
                 errors={errors.bairro ? true : false}
-                placeHolder="Bairro"
+                placeHolder="Bairro*"
                 style={{
                   width: '200px',
                 }}
@@ -191,13 +196,13 @@ export function Checkout() {
               />
               <InputText
                 type="text"
-                placeHolder="Cidade"
+                placeHolder="Cidade*"
                 errors={errors.cidade ? true : false}
                 register={{ ...register('cidade') }}
               />
               <InputText
                 type="text"
-                placeHolder="UF"
+                placeHolder="UF*"
                 errors={errors.uf ? true : false}
                 style={{
                   width: '60px',
@@ -246,30 +251,29 @@ export function Checkout() {
         {itemsCart.length > 0 ? (
           <C.CartBlock>
             <div>
+              {itemsCart.map((item) => (
+                <C.ItemCart key={item.id}>
+                  <img src={images[item.id]} alt="" />
 
-            {itemsCart.map((item) => (
-              <C.ItemCart key={item.id}>
-                <img src={images[item.id]} alt="" />
+                  <C.NameAmountRemoveItemContainer>
+                    <p>{item.name}</p>
 
-                <C.NameAmountRemoveItemContainer>
-                  <p>{item.name}</p>
-
-                  <C.AmountAndRemoveContainer>
-                    <AmountItems
-                      amountItems={item.amount}
-                      setAmountItems={() => {}}
-                      data={item}
-                    />
-                    <RemoveButton
-                      icon={<Trash />}
-                      onClick={() => removeItem(item.id)}
-                      text="REMOVER"
-                    />
-                  </C.AmountAndRemoveContainer>
-                </C.NameAmountRemoveItemContainer>
-                <C.Price>R$ {item.price}</C.Price>
-              </C.ItemCart>
-            ))}
+                    <C.AmountAndRemoveContainer>
+                      <AmountItems
+                        amountItems={item.amount}
+                        setAmountItems={() => {}}
+                        data={item}
+                      />
+                      <RemoveButton
+                        icon={<Trash />}
+                        onClick={() => removeItem(item.id)}
+                        text="REMOVER"
+                      />
+                    </C.AmountAndRemoveContainer>
+                  </C.NameAmountRemoveItemContainer>
+                  <C.Price>R$ {item.price}</C.Price>
+                </C.ItemCart>
+              ))}
             </div>
 
             <C.DivisionLine />

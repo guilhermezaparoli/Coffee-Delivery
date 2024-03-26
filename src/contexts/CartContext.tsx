@@ -25,7 +25,7 @@ export interface ItemsCardType {
 interface DataOrderType {
     cep: number,
     rua: string,
-    numero: string,
+    numero: number,
     complemento: string,
     bairro: string,
     cidade: string,
