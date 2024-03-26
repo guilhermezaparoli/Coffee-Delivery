@@ -51,7 +51,7 @@ export function CoffeeCard({ data, index }: CoffeeCardProps) {
   ];
   const [numberItems, setNumberItems] = useState<number>(1)
 
-  const { itemsCart, setItemsCart } = useContext(CartContext);
+  const { itemsCart, setItemsLocalStorage } = useContext(CartContext);
 
   const itemCartNew = [...itemsCart]
 
@@ -65,12 +65,12 @@ export function CoffeeCard({ data, index }: CoffeeCardProps) {
       itemCartNew.push({...data, amount: numberItems})
     }
 
-    setItemsCart(itemCartNew)
-    
+    setItemsLocalStorage([...itemCartNew])
     numberItems > 1 ? toast.success("Cafés adicionados ao carrinho", {
       closeOnClick: true
     })  : toast.success("Café adicionado ao carrinho", {
-      closeOnClick: true
+      closeOnClick: true,
+      position: "top-center"
     })
   }
 
@@ -96,9 +96,9 @@ export function CoffeeCard({ data, index }: CoffeeCardProps) {
           R$ <span>{data.price}</span>
         </p>
         <C.AmountItemsAndAddCart>
-          <AmountItems amountItems={numberItems} setAmountItems={setNumberItems}/>
-          <C.AddItemsCard>
-            <ShoppingCartSimple onClick={addItemsCart} weight="fill" />
+          <AmountItems amountItems={numberItems} setAmountItems={setNumberItems} windowControled/>
+          <C.AddItemsCard onClick={addItemsCart} >
+            <ShoppingCartSimple weight="fill" />
           </C.AddItemsCard>
         </C.AmountItemsAndAddCart>
       </C.WrapperFooter>

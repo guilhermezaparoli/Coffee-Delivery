@@ -6,6 +6,7 @@ interface CartContextType {
    setItemsCart: (value: ItemsCardType[]) => void,
    dataOrder: DataOrderType,
    setDataOrder: (value: DataOrderType) => void
+   setItemsLocalStorage: (value: ItemsCardType[]) => void
 }
 
 export interface ItemsCardType {
@@ -40,10 +41,22 @@ interface CartContextProviderProps {
 }
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
-  const [itemsCart, setItemsCart] = useState<ItemsCardType[]>([] as ItemsCardType[]);
+  const itemsCartLocalStorage = localStorage.getItem("@ignite-coofe-delivery:CooffesCart-1.0.0");
+  const initialItemsCart = itemsCartLocalStorage ? JSON.parse(itemsCartLocalStorage) : [];
+
+  // Initialize itemsCart state with the value from localStorage
+  const [itemsCart, setItemsCart] = useState<ItemsCardType[]>(initialItemsCart);
   const [dataOrder, setDataOrder] = useState<DataOrderType>({} as DataOrderType);
+
+  // Function to update itemsCart state and localStorage
+  const setItemsLocalStorage = (newItemsCart: ItemsCardType[]) => {
+    setItemsCart(newItemsCart);
+    localStorage.setItem("@ignite-coofe-delivery:CooffesCart-1.0.0", JSON.stringify(newItemsCart));
+  };
+
+
   return (
-    <CartContext.Provider value={{ itemsCart, setItemsCart, dataOrder, setDataOrder }}>
+    <CartContext.Provider value={{ itemsCart, setItemsCart, dataOrder, setDataOrder, setItemsLocalStorage }}>
       {children}
     </CartContext.Provider>
   );

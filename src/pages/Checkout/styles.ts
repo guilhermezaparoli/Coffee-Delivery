@@ -102,6 +102,9 @@ gap: 20px;
   height: 64px;
 }
 border-bottom: 1px solid rgba(140, 136, 136, 0.20);
+&:last-child {
+  border-bottom: 0;
+}
 
 `
 export const CartNoItems = styled(BaseBlock)`
@@ -197,3 +200,4 @@ transition: 0.3s;
   filter: brightness(0.9);
 }
 `
+

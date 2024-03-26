@@ -73,8 +73,11 @@ display: flex;
 align-items: center;
 justify-content: center;
 
-position: absolute;
 top: 0;
+right: 0;
+margin-top: -8px;
+margin-right: -5px;
+position: absolute;
 `
 export const TextAmountItensCart = styled.p`
 width: 20px;

@@ -7,7 +7,6 @@ import { CartContext } from '../../contexts/CartContext';
 export function OrderSuccess() {
   const {dataOrder} = useContext(CartContext)
   
-  console.log(dataOrder)
   return (
     <C.Global>
       <C.LeftBlock>

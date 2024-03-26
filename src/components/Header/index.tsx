@@ -24,14 +24,14 @@ export function Header() {
             <C.IconMapPin />
             <C.TextCardLocation>José Bonifácio, SP</C.TextCardLocation>
           </C.CardLocation>
-          <C.CartStatus>
             <Link to={'/checkout'}>
+          <C.CartStatus>
               <C.IconCart />
-            </Link>
             <C.AmountItensCart>
               <C.TextAmountItensCart>{totalItens}</C.TextAmountItensCart>
             </C.AmountItensCart>
           </C.CartStatus>
+            </Link>
         </C.LocationAndCart>
       </C.Main>
       <Outlet />

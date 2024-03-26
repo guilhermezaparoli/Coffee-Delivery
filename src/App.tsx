@@ -40,7 +40,7 @@ export function App() {
   return (
     < >
       <CartContextProvider>
-        <ToastContainer/>
+        <ToastContainer closeOnClick limit={2} autoClose={3000} pauseOnHover={false}/>
     <ThemeProvider theme={defaultTheme}>
     <RouterProvider router={router} />
     </ThemeProvider>

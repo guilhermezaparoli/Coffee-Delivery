@@ -45,7 +45,7 @@ interface handleNewOrderData {
 }
 
 export function Checkout() {
-  const { itemsCart, setItemsCart, setDataOrder } = useContext(CartContext);
+  const { itemsCart, setDataOrder, setItemsLocalStorage } = useContext(CartContext);
 
   const [typePaymentSelected, setTypePaymentSelected] = useState<string>('');
   const newOrderValidationSchema = zod.object({
@@ -67,14 +67,12 @@ export function Checkout() {
   const navigate = useNavigate();
 
   function handleNewOrder(data: handleNewOrderData) {
-
-    setDataOrder({...data})
+    setDataOrder({ ...data });
 
     navigate('/order-success');
 
-    toast.success("Pedido realizado com sucesso!")
+    toast.success('Pedido realizado com sucesso!');
   }
-
 
   const images = [
     CoffeeExpressoTrad,
@@ -93,25 +91,29 @@ export function Checkout() {
     CoffeeIrlandes,
   ];
 
-  const totalPrice = itemsCart.reduce((acc, curr) => acc + curr.priceNumber, 0);
+  const totalPrice = itemsCart.reduce(
+    (acc, curr) => acc + curr.priceNumber * curr.amount,
+    0
+  );
 
+  function removeItem(toDelet: number) {
+    const itemToDelete = itemsCart.findIndex((item) => item.id == toDelet);
 
-  function removeItem(toDelet: number){
-    console.log(toDelet)
-const itemToDelete = itemsCart.findIndex((item) => item.id == toDelet ) 
+    if (itemToDelete !== -1) {
+      itemsCart.splice(itemToDelete, 1);
+    }
 
-if(itemToDelete !== -1){
-  itemsCart.splice(itemToDelete, 1);
-}
-
-setItemsCart([...itemsCart])
-
-toast.success("Produto excluído do carrinho!")
+    setItemsLocalStorage([...itemsCart])
+    toast.success('Produto excluído do carrinho!');
   }
 
-  useEffect(()=> {}, [itemsCart])
+  useEffect(() => {
+  }, [itemsCart]);
 
-
+  useEffect(() => {
+    Object.keys(errors).length > 0 &&
+      toast.error('Preencha os campos obrigatórios!');
+  }, [errors]);
 
   return (
     <C.Global>
@@ -133,7 +135,7 @@ toast.success("Produto excluído do carrinho!")
               placeHolder="CEP"
               errors={errors.cep ? true : false}
               style={{ width: '200px' }}
-              register={{ ...register('cep', {valueAsNumber: true}) }}
+              register={{ ...register('cep', { valueAsNumber: true }) }}
               maxLength={8}
             />
             <InputText
@@ -224,6 +226,8 @@ toast.success("Produto excluído do carrinho!")
 
         {itemsCart.length > 0 ? (
           <C.CartBlock>
+            <div>
+
             {itemsCart.map((item) => (
               <C.ItemCart key={item.id}>
                 <img src={images[item.id]} alt="" />
@@ -232,13 +236,22 @@ toast.success("Produto excluído do carrinho!")
                   <p>{item.name}</p>
 
                   <C.AmountAndRemoveContainer>
-                    <AmountItems amountItems={item.amount} />
-                    <RemoveButton icon={<Trash />} onClick={() => removeItem(item.id)} text="REMOVER" />
+                    <AmountItems
+                      amountItems={item.amount}
+                      setAmountItems={() => {}}
+                      data={item}
+                    />
+                    <RemoveButton
+                      icon={<Trash />}
+                      onClick={() => removeItem(item.id)}
+                      text="REMOVER"
+                    />
                   </C.AmountAndRemoveContainer>
                 </C.NameAmountRemoveItemContainer>
                 <C.Price>R$ {item.price}</C.Price>
               </C.ItemCart>
             ))}
+            </div>
 
             <C.DivisionLine />
 
@@ -272,12 +285,10 @@ toast.success("Produto excluído do carrinho!")
         ) : (
           <C.CartNoItems>
             <C.ItemNoItemsCart>
-         
-                <p>Não há produtos adicionados no carrinho!</p>
-                <Link to={"/"}>
+              <p>Não há produtos adicionados no carrinho!</p>
+              <Link to={'/'}>
                 <C.ButtonSeeProducts>Ver produtos</C.ButtonSeeProducts>
-                </Link>
-             
+              </Link>
             </C.ItemNoItemsCart>
           </C.CartNoItems>
         )}
