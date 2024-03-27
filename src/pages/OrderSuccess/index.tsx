@@ -20,8 +20,7 @@ export function OrderSuccess() {
               <MapPin weight="fill" />
             </C.IconMapRounded>
             <p> 
-              Entrega em <C.BoldText>Rua {dataOrder.rua},{dataOrder.numero}</C.BoldText>
-              , {dataOrder.bairro} - {dataOrder.cidade}, {dataOrder.uf}
+              Entrega em <C.BoldText>Rua {dataOrder.rua}, {dataOrder.numero} </C.BoldText>, {dataOrder.bairro} - {dataOrder.cidade}, {dataOrder.uf}
             </p>
           </C.IconeTexto>
 

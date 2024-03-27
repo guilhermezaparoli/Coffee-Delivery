@@ -48,11 +48,12 @@ interface handleNewOrderData {
 export function Checkout() {
   const { itemsCart, setDataOrder, setItemsLocalStorage } =
     useContext(CartContext);
+const [cepValue, setCepValue] = useState<string>("")
 
   const [typePaymentSelected, setTypePaymentSelected] =
     useState<string>('DINHEIRO');
   const newOrderValidationSchema = zod.object({
-    cep: zod.number().min(8),
+    cep: zod.number(),
     rua: zod.string().min(3, 'Informe a rua'),
     numero: zod.number().min(1, 'Informe o número'),
     complemento: zod.string(),
@@ -65,9 +66,19 @@ export function Checkout() {
     handleSubmit,
     formState: { errors },
   } = useForm<handleNewOrderData>({
-    resolver: zodResolver(newOrderValidationSchema),
+    resolver: zodResolver(newOrderValidationSchema)
   });
   const navigate = useNavigate();
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const inputValue = e?.target.value
+
+if(inputValue.length <= 8 && /^\d*$/.test(inputValue)){
+  setCepValue(inputValue)
+}
+}
+
+console.log(errors)
 
   function handleNewOrder(data: handleNewOrderData) {
     console.log(typePaymentSelected);
@@ -150,11 +161,13 @@ export function Checkout() {
             <C.TextSubtitle>*campos obrigatórios</C.TextSubtitle>
             <div>
               <InputText
-                type="number"
+                type="text"
                 placeHolder="CEP*"
                 errors={errors.cep ? true : false}
                 style={{ width: '200px' }}
                 register={{ ...register('cep', { valueAsNumber: true }) }}
+                value={cepValue}
+                onChange={handleChange}
                 maxLength={8}
               />
               {errors.cep && (
@@ -174,7 +187,7 @@ export function Checkout() {
                 errors={errors.numero ? true : false}
                 placeHolder="Número*"
                 style={{ width: '200px' }}
-                register={{ ...register('numero') }}
+                register={{ ...register('numero', {valueAsNumber:true}) }}
               />
               <InputText
                 type="text"
