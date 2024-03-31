@@ -133,7 +133,7 @@ console.log(errors)
     }
 
     setItemsLocalStorage([...itemsCart]);
-    toast.success('Produto excluído do carrinho!');
+    toast.success('Café excluído do carrinho!');
   }
 
   useEffect(() => {}, [itemsCart]);
