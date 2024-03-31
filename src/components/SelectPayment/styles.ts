@@ -25,6 +25,10 @@ transition: 0.3s;
 border: 1px solid ${({theme}) => theme.purple};
 background-color: ${({theme}) => theme["purple-light"]};
 }
+
+@media (max-width: 768px) {
+  padding: 12px;
+}
 `
 
 export const BlockTextIcon = styled.div`

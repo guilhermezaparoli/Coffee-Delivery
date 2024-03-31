@@ -238,22 +238,22 @@ console.log(errors)
           </C.TextIconBlockPayment>
           <C.PaymentMethod>
             <SelectPayment
+              isSelected={typePaymentSelected === 'DINHEIRO'}
+              title="DINHEIRO"
+              onClick={() => setTypePaymentSelected('DINHEIRO')}
+              icon={<Money />}
+            />
+            <SelectPayment
               isSelected={typePaymentSelected === 'CREDITO'}
-              title="CARTÃO DE CŔEDITO"
+              title="C. CŔEDITO"
               onClick={() => setTypePaymentSelected('CREDITO')}
               icon={<CreditCard />}
             />
             <SelectPayment
               isSelected={typePaymentSelected === 'DEBITO'}
-              title="CARTÃO DE DÉBITO"
+              title="C. DÉBITO"
               onClick={() => setTypePaymentSelected('DEBITO')}
               icon={<Bank />}
-            />
-            <SelectPayment
-              isSelected={typePaymentSelected === 'DINHEIRO'}
-              title="DINHEIRO"
-              onClick={() => setTypePaymentSelected('DINHEIRO')}
-              icon={<Money />}
             />
           </C.PaymentMethod>
         </C.BaseBlock>

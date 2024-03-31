@@ -10,12 +10,19 @@ margin: 0 auto;
 display: flex;
 align-items: center;
 justify-content: space-between;
+
+@media (max-width: 768px) {
+  padding: 1rem 0.5rem;
+}
 `
 
 export const Logo = styled.div`
+display: flex;
+justify-content: center;
 > img {
   cursor: pointer;
-}
+} 
+  
 `
 
 export const LocationAndCart = styled.div`
@@ -44,13 +51,19 @@ font-family: "Roboto", sans-serif;
 font-size: 14px;
 line-height: 1.3;
 color: ${props => props.theme["purple-dark"]};
+
 `
 
 export const IconMapPin = styled(MapPin).attrs({
   weight: "fill",
-  size: "22px",
 })`
 color: ${({theme}) => theme.purple};
+
+font-size: 22px;
+@media (max-width: 768px) {
+  font-size: 1rem;
+
+}
 `
 
 

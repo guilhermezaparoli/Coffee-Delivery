@@ -140,7 +140,6 @@ export function Home() {
 
   return (
     <>
-    {/* <Header/> */}
     <C.GlobalStyle>
       <C.FirstBlock>
         <C.TextBlock>

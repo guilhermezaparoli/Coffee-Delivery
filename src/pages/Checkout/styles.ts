@@ -7,12 +7,19 @@ margin: 5.875rem auto 10rem;
 
 display: flex;
 gap: 32px;
+
+@media (max-width: 768px) {
+  flex-direction: column;
+  padding: 10px;
+ margin: 2rem auto 2rem;
+}
 `
 
 export const LeftBlock = styled.div`
 > h3 {
   margin-bottom: 16px;
 }
+
 `
 
 
@@ -20,6 +27,11 @@ export const BaseBlock = styled.div`
 padding: 40px;
 background-color: ${({theme}) => theme["base-card"]};
 border-radius: 6px;
+
+@media (max-width: 768px) {
+  padding: 10px;
+  margin-bottom: 5px;
+}
 `
 
 const BaseTextIconBlock = styled.div`
@@ -82,6 +94,10 @@ export const PaymentMethod = styled.div`
 display: flex;
 align-items: center;
 gap: 12px;
+
+@media (max-width: 768px) {
+justify-content: center;
+}
 `
 
 export const RightBlock = styled.div`
@@ -93,6 +109,10 @@ export const RightBlock = styled.div`
 export const CartBlock = styled(BaseBlock)`
 border-radius: 6px 44px;
 
+@media (max-width: 768px) {
+  border-radius: 6px;
+  
+}
 `
 
 export const ItemCart = styled.div`
@@ -154,6 +174,10 @@ font-weight: 700;
 line-height: 1.3;
 color: ${({theme}) => theme["base-text"]};
 margin-left: 50px;
+
+@media (max-width: 768px) {
+  margin-left: 20px;
+}
 `
 
 export const DivisionLine = styled.div`
