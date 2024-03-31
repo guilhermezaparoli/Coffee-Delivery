@@ -18,6 +18,7 @@ import { ShoppingCartSimple } from '@phosphor-icons/react';
 import { useContext, useState } from 'react';
 import { CartContext } from '../../contexts/CartContext';
 import { toast } from 'react-toastify';
+import useWindowSize from '../../hooks/useWindowsSize';
 
 interface CoffeeCardProps {
   data: {
@@ -27,12 +28,14 @@ interface CoffeeCardProps {
     description: string;
     price: string;
     image: string;
-    priceNumber: number
+    priceNumber: number;
   };
   index: number;
 }
 
 export function CoffeeCard({ data, index }: CoffeeCardProps) {
+  const { isMobile } = useWindowSize();
+
   const images = [
     CoffeeExpressoTrad,
     CoffeeExpressoAme,
@@ -49,29 +52,31 @@ export function CoffeeCard({ data, index }: CoffeeCardProps) {
     CoffeeArabe,
     CoffeeIrlandes,
   ];
-  const [numberItems, setNumberItems] = useState<number>(1)
+  const [numberItems, setNumberItems] = useState<number>(1);
 
   const { itemsCart, setItemsLocalStorage } = useContext(CartContext);
 
-  const itemCartNew = [...itemsCart]
+  const itemCartNew = [...itemsCart];
 
   function addItemsCart() {
-    const isItemList = itemCartNew.some((item) => item.id == data.id )
+    const isItemList = itemCartNew.some((item) => item.id == data.id);
 
-    if(isItemList) {
-      const indexItemList = itemCartNew.findIndex((item) => item.id == data.id )
-    itemCartNew[indexItemList].amount += numberItems
+    if (isItemList) {
+      const indexItemList = itemCartNew.findIndex((item) => item.id == data.id);
+      itemCartNew[indexItemList].amount += numberItems;
     } else {
-      itemCartNew.push({...data, amount: numberItems})
+      itemCartNew.push({ ...data, amount: numberItems });
     }
 
-    setItemsLocalStorage([...itemCartNew])
-    numberItems > 1 ? toast.success("Cafés adicionados ao carrinho", {
-      closeOnClick: true
-    })  : toast.success("Café adicionado ao carrinho", {
-      closeOnClick: true,
-      position: "top-center"
-    })
+    setItemsLocalStorage([...itemCartNew]);
+    numberItems > 1
+      ? toast.success('Cafés adicionados ao carrinho', {
+          closeOnClick: true,
+        })
+      : toast.success('Café adicionado ao carrinho', {
+          closeOnClick: true,
+          position: isMobile ? 'bottom-center' : 'top-center',
+        });
   }
 
   return (
@@ -96,8 +101,12 @@ export function CoffeeCard({ data, index }: CoffeeCardProps) {
           R$ <span>{data.price}</span>
         </p>
         <C.AmountItemsAndAddCart>
-          <AmountItems amountItems={numberItems} setAmountItems={setNumberItems} windowControled/>
-          <C.AddItemsCard onClick={addItemsCart} >
+          <AmountItems
+            amountItems={numberItems}
+            setAmountItems={setNumberItems}
+            windowControled
+          />
+          <C.AddItemsCard onClick={addItemsCart}>
             <ShoppingCartSimple weight="fill" />
           </C.AddItemsCard>
         </C.AmountItemsAndAddCart>

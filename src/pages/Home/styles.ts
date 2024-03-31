@@ -6,7 +6,7 @@ margin: 5.875rem auto 10rem;
 
 @media (max-width: 768px) {
  padding: 10px;
- margin: 2rem auto 2rem;
+ margin: 2rem auto 5rem;
 }
 `
 

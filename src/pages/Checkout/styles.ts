@@ -11,7 +11,7 @@ gap: 32px;
 @media (max-width: 768px) {
   flex-direction: column;
   padding: 10px;
- margin: 2rem auto 2rem;
+ margin: 2rem auto 5rem;
 }
 `
 

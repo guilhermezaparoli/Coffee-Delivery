@@ -13,7 +13,7 @@ export const Global = styled.div`
     flex-direction: column;
     align-items: center;
     padding: 10px;
- margin: 2rem auto 2rem;
+ margin: 2rem auto 5rem;
 
   }
 `;
