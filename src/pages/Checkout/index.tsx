@@ -53,7 +53,9 @@ const [cepValue, setCepValue] = useState<string>("")
   const [typePaymentSelected, setTypePaymentSelected] =
     useState<string>('DINHEIRO');
   const newOrderValidationSchema = zod.object({
-    cep: zod.number(),
+    cep: zod.number( {
+      invalid_type_error: "Informe um CEP válido!"
+    }).min(8, "Informe um CEP válido!"),
     rua: zod.string().min(3, 'Informe a rua'),
     numero: zod.number().min(1, 'Informe o número'),
     complemento: zod.string(),
@@ -64,21 +66,26 @@ const [cepValue, setCepValue] = useState<string>("")
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }, clearErrors
   } = useForm<handleNewOrderData>({
     resolver: zodResolver(newOrderValidationSchema)
   });
+
   const navigate = useNavigate();
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const inputValue = e?.target.value
+
+
+    if(inputValue.length == 8){
+      clearErrors("cep")
+    }
 
 if(inputValue.length <= 8 && /^\d*$/.test(inputValue)){
   setCepValue(inputValue)
 }
 }
 
-console.log(errors)
 
   function handleNewOrder(data: handleNewOrderData) {
     console.log(typePaymentSelected);
@@ -162,6 +169,7 @@ console.log(errors)
             <div>
               <InputText
                 type="text"
+                inputMode='numeric'
                 placeHolder="CEP*"
                 errors={errors.cep ? true : false}
                 style={{ width: '200px' }}
@@ -171,7 +179,7 @@ console.log(errors)
                 maxLength={8}
               />
               {errors.cep && (
-                <C.TextError>Informe um CEP válido!</C.TextError>
+                <C.TextError>{errors.cep.message}</C.TextError>
               )}
             </div>
 
@@ -184,6 +192,7 @@ console.log(errors)
             <C.WrapperInputsInternal>
               <InputText
                 type="number"
+                inputMode='numeric'
                 errors={errors.numero ? true : false}
                 placeHolder="Número*"
                 style={{ width: '200px' }}
@@ -218,8 +227,9 @@ console.log(errors)
                 placeHolder="UF*"
                 errors={errors.uf ? true : false}
                 style={{
-                  width: '60px',
+                  width: '50px',
                 }}
+                maxLength={2}
                 register={{ ...register('uf') }}
               />
             </C.WrapperInputsInternal>
