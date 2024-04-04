@@ -72,6 +72,7 @@ export function CoffeeCard({ data, index }: CoffeeCardProps) {
     numberItems > 1
       ? toast.success('Cafés adicionados ao carrinho', {
           closeOnClick: true,
+          position: isMobile ? 'bottom-center' : 'top-center',
         })
       : toast.success('Café adicionado ao carrinho', {
           closeOnClick: true,
